@@ -13,6 +13,7 @@ import retrofit2.Response
 
 class TrendingViewModel(application: Application) : AndroidViewModel(application) {
     var reposList: MutableLiveData<TrendingResponse> = MutableLiveData<TrendingResponse>()
+    var pos: Int = -1
 
     /**
      * fun executes the fetch API call
@@ -32,5 +33,13 @@ class TrendingViewModel(application: Application) : AndroidViewModel(application
             }
         })
         return reposList
+    }
+
+    fun setSelectedPosition(position: Int) {
+        pos = position
+    }
+
+    fun getSelectedPosition(): Int {
+        return pos
     }
 }

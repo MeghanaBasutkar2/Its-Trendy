@@ -1,6 +1,5 @@
 package com.example.itstrending.view
 
-import android.icu.lang.UCharacter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -37,7 +36,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setAndObserveAdapter() {
         viewModel.fetchTrendingReposResponse().observe(this, {
-            recyclerview.adapter = TrendingReposAdapter(it.items, this)
+            recyclerview.adapter = TrendingReposAdapter(viewModel, it.items, this)
+
         })
     }
 }
