@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ItsTrending</string>
+    <string name="msg_empty_string">No Trending Repos found!!</string>
+</resources>
