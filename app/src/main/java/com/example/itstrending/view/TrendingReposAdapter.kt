@@ -38,14 +38,28 @@ class TrendingReposAdapter(
             itemView.apply {
                 //using data binding to refer xml views directly
                 txvTitle.text = item.name
-                txvForks.text = NumberFormatter.formatDecimalNum(item.forksCount)
+                txvForks.text = itemView.resources.getString(R.string.forks,
+                    NumberFormatter.formatDecimalNum(item.forksCount))
                 txvDescription.text = item.description
+
                 when {
                     item.forksCount > 0 -> imvFork.visibility = View.VISIBLE
                 }
+
                 val radius = 8
-                ImageUtils.loadImage(context, item.owner.avatar, R.drawable.ic_launcher_foreground,
-                    imvAvatar, radius)
+                ImageUtils.loadImage(
+                    context, item.owner.avatar, R.drawable.ic_launcher_foreground,
+                    imvAvatar, radius
+                )
+
+                layoutParent.setOnClickListener {
+                    var selectedPosition = adapterPosition
+                    when{
+                        selectedPosition!=oldPosition -> layoutParent.isSelected = true
+                        else -> layoutParent.isSelected = false
+                    }
+                    apply { isSelected = true }
+                }
             }
         }
     }
