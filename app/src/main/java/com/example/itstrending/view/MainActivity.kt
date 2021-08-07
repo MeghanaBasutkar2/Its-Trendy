@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setAndObserveAdapter() {
         viewModel.fetchTrendingReposResponse().observe(this, {
-            recyclerview.adapter = TrendingReposAdapter(viewModel, it.items, this)
+            recyclerview.adapter = TrendingReposAdapter(it.items, this)
         })
     }
 }

@@ -2,4 +2,8 @@
 <resources>
     <dimen name="margin_16">16dp</dimen>
     <dimen name="ts_16">16sp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="margin_30">30dp</dimen>
+    <dimen name="margin_6">6dp</dimen>
 </resources>
