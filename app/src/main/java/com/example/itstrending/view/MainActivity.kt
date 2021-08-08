@@ -1,17 +1,12 @@
 package com.example.itstrending.view
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itstrending.viewmodel.TrendingViewModel
-import android.R
-import android.view.View
-
-import android.widget.TextView
-import androidx.lifecycle.Observer
-
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel: TrendingViewModel

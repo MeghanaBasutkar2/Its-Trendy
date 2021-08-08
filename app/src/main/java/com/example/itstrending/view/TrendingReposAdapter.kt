@@ -14,7 +14,8 @@ import com.example.itstrending.viewmodel.TrendingViewModel
 import kotlinx.android.synthetic.main.item_repo.view.*
 import kotlin.properties.Delegates
 
-class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context: Context) : RecyclerView.Adapter<TrendingReposAdapter.ReposViewHolder>() {
+class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context: Context) :
+    RecyclerView.Adapter<TrendingReposAdapter.ReposViewHolder>() {
     var isListSet: Boolean = false
     var list: ArrayList<TrendingResponse.ItemsObj> = ArrayList()
 
@@ -31,10 +32,19 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context
     }
 
     /**
+    * sets recycler list
+    * */
+    fun setList(it: TrendingResponse?) {
+        isListSet = true
+        this.list = it?.items!!
+        notifyDataSetChanged()
+    }
+
+    /**
      * fun keeps track of the currently selected position
      */
     private var selectedPosition by Delegates.observable(-1) { _, oldPos, newPos ->
-        if (oldPos>=0 && newPos in list.indices) {
+        if (oldPos >= 0 && newPos in list.indices) {
             notifyItemChanged(oldPos)
             notifyItemChanged(newPos)
         }
@@ -42,14 +52,18 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context
 
     override fun onBindViewHolder(holder: ReposViewHolder, position: Int) {
         holder.bind(list[position], (position == selectedPosition))
-        holder.itemView.layoutParent.setOnClickListener {
-            selectedPosition = position
-            notifyItemChanged(position)
-            viewModel.setSelectedWithIndex(hashMapOf(true to position))
-        }
     }
 
     inner class ReposViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        init {
+            itemView.layoutParent.setOnClickListener {
+                selectedPosition = adapterPosition
+                notifyItemChanged(adapterPosition)
+                viewModel.setSelectedWithIndex(hashMapOf(true to adapterPosition))
+            }
+        }
+
         fun bind(item: TrendingResponse.ItemsObj, selected: Boolean) {
             itemView.apply {
                 //using data binding to refer xml views directly except for layout
@@ -65,18 +79,16 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context
                 }
 
                 val radius = 8
-                ImageUtils.loadImage(
-                    context, item.owner.avatar, R.drawable.ic_launcher_foreground,
-                    imvAvatar, radius
-                )
+                ImageUtils.loadImage(context, item.owner.avatar, R.drawable.ic_launcher_foreground,
+                    imvAvatar, radius)
                 layoutParent.isSelected = selected
             }
             setSelectionPrev()
         }
     }
 
-     fun setSelectionPrev() {
-         //when the config changes & something was selected before config change
+    fun setSelectionPrev() {
+        //when the config changes & something was selected before config change
         if (selectedPosition == -1 && viewModel.getSelectedWithIndex().value != null
             && viewModel.getSelectedWithIndex().value!!.containsKey(true)) {
             selectedPosition = viewModel.getSelectedWithIndex().value!!.getValue(true)
@@ -91,11 +103,5 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context
             ).show()
         }
         return list.size
-    }
-
-    fun setList(it: TrendingResponse?) {
-        isListSet = true
-        this.list = it?.items!!
-        notifyDataSetChanged()
     }
 }

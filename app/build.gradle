@@ -12,9 +12,7 @@ apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdk 30
-    buildFeatures {
-        dataBinding = true
-    }
+
     defaultConfig {
         applicationId "com.example.itstrending"
         minSdk 21
@@ -69,8 +67,6 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
 
-    //data binding
-    kapt "com.android.databinding:compiler:3.1.4"
 
     //junit
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
