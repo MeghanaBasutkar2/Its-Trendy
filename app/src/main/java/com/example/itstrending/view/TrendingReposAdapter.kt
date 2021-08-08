@@ -55,7 +55,6 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context
     }
 
     inner class ReposViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         init {
             itemView.layoutParent.setOnClickListener {
                 selectedPosition = adapterPosition
