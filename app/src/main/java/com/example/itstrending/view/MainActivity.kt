@@ -1,6 +1,5 @@
 package com.example.itstrending.view
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -30,12 +29,11 @@ class MainActivity : AppCompatActivity() {
             this.layoutManager = layoutManager
             this.adapter = mainAdapter
         }
-        setAndObserveAdapter()
+        observeChangesInList()
     }
 
-    private fun setAndObserveAdapter() {
-        viewModel.fetchTrendingReposResponse().observe(this, {
-            mainAdapter.setList(it)
-        })
+    private fun observeChangesInList() {
+        //todo: add loader & pull to refresh
+        viewModel.fetchTrendingReposResponse().observe(this, { mainAdapter.setList(it) })
     }
 }

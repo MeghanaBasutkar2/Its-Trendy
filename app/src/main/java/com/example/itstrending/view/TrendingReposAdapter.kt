@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itstrending.R
-import com.example.itstrending.Utils.ImageUtils
 import com.example.itstrending.Utils.NumberFormatter
 import com.example.itstrending.data.TrendingResponse
 import com.example.itstrending.viewmodel.TrendingViewModel
@@ -24,16 +23,13 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context
      * */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReposViewHolder {
         return ReposViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_repo,
-                parent, false
-            )
+            LayoutInflater.from(parent.context).inflate(R.layout.item_repo, parent, false)
         )
     }
 
     /**
-    * sets recycler list
-    * */
+     * sets recycler list
+     * */
     fun setList(it: TrendingResponse?) {
         isListSet = true
         this.list = it?.items!!
@@ -59,7 +55,7 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context
             itemView.layoutParent.setOnClickListener {
                 selectedPosition = adapterPosition
                 notifyItemChanged(adapterPosition)
-                viewModel.setSelectedWithIndex(hashMapOf(true to adapterPosition))
+                viewModel.setSelectedWithIndex(adapterPosition)
             }
         }
 
@@ -86,11 +82,12 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context
         }
     }
 
+    /**
+     * when the config changes & something was selected before config change
+     * */
     fun setSelectionPrev() {
-        //when the config changes & something was selected before config change
-        if (selectedPosition == -1 && viewModel.getSelectedWithIndex().value != null
-            && viewModel.getSelectedWithIndex().value!!.containsKey(true)) {
-            selectedPosition = viewModel.getSelectedWithIndex().value!!.getValue(true)
+        if (selectedPosition == -1 && viewModel.getSelectedIndex().value != null) {
+            selectedPosition = viewModel.getSelectedIndex().value!!
         }
     }
 

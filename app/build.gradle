@@ -13,6 +13,11 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdk 30
 
+    //allow returning test values in test classes
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
     defaultConfig {
         applicationId "com.example.itstrending"
         minSdk 21

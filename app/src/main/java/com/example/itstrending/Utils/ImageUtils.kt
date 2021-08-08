@@ -1,5 +1,3 @@
-package com.example.itstrending.Utils
-
 import android.content.Context
 import android.widget.ImageView
 import com.bumptech.glide.Glide

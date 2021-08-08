@@ -2,27 +2,23 @@ package com.example.itstrending.viewmodel
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.*
 import com.example.itstrending.data.TrendingResponse
 import com.example.itstrending.repository.NetworkRepository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TrendingViewModel(application: Application, var stateHandle: SavedStateHandle) :
-    AndroidViewModel(application) {
+class TrendingViewModel(var stateHandle: SavedStateHandle) : ViewModel() {
     var reposList: MutableLiveData<TrendingResponse> = MutableLiveData<TrendingResponse>()
-    private var identifier: String = "SAVED_K_V"
+    private var identifier: String = "SAVED_POS"
 
-    fun getSelectedWithIndex(): LiveData<HashMap<Boolean, Int>> {
+    fun getSelectedIndex(): LiveData<Int> {
         return stateHandle.getLiveData(identifier)
     }
 
-    fun setSelectedWithIndex(map: HashMap<Boolean, Int>) {
-        stateHandle.set(identifier, map)
+    fun setSelectedWithIndex(position: Int) {
+        stateHandle.set(identifier, position)
     }
 
     /**
