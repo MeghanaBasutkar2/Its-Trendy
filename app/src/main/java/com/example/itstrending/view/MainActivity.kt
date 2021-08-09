@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         swipeRefreshLayout.setOnRefreshListener {
             onSwipeToRefresh()
         }
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.blue))
         setUpRecycler()
     }
 
