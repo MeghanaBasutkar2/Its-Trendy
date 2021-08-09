@@ -1,6 +1,5 @@
 package com.example.itstrending.viewmodel
 
-import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.itstrending.data.TrendingResponse

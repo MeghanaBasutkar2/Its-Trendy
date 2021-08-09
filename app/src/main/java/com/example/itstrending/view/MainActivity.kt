@@ -7,21 +7,35 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
+import com.example.itstrending.R
 import com.example.itstrending.viewmodel.TrendingViewModel
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel: TrendingViewModel
     lateinit var recyclerview: RecyclerView
     lateinit var mainAdapter: TrendingReposAdapter
-    lateinit var progress: ProgressBar
+    private lateinit var progress: ProgressBar
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    var isSwiped = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.example.itstrending.R.layout.activity_main)
-        recyclerview = findViewById(com.example.itstrending.R.id.recyclerView)
-        progress = findViewById(com.example.itstrending.R.id.progressBar)
+        setContentView(R.layout.activity_main)
+        recyclerview = findViewById(R.id.recyclerView)
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        progress = findViewById(R.id.progressBar)
         viewModel = ViewModelProvider(this).get(TrendingViewModel::class.java)
+        swipeRefreshLayout.setOnRefreshListener {
+            onSwipeToRefresh()
+        }
         setUpRecycler()
+    }
+
+    private fun onSwipeToRefresh() {
+        isSwiped = true
+        observeChangesInList()
     }
 
     private fun setUpRecycler() {
@@ -38,7 +52,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeChangesInList() {
-        viewModel.fetchTrendingReposResponse().observe(this, { mainAdapter.setList(it)
-        progress.visibility = View.GONE})
+        viewModel.fetchTrendingReposResponse().observe(this, {
+            mainAdapter.setList(it)
+            progress.visibility = View.GONE
+            //stop refreshing once user swipes & data is fetched from API call
+            if (isSwiped) {
+                swipeRefreshLayout.isRefreshing = false
+            }
+        }
+        )
     }
 }
