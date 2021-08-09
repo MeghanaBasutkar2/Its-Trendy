@@ -8,4 +8,5 @@
     <dimen name="margin_6">6dp</dimen>
     <dimen name="margin_1">1dp</dimen>
     <dimen name="size_50">50dp</dimen>
+    <dimen name="font_small">18sp</dimen>
 </resources>

@@ -6,8 +6,9 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.16822916666666668" />
         <entry key="app/src/main/res/drawable/ic_fork.xml" value="0.23072916666666668" />
         <entry key="app/src/main/res/drawable/rectangle.xml" value="0.23072916666666668" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.28020833333333334" />
-        <entry key="app/src/main/res/layout/item_repo.xml" value="0.45868465430016864" />
+        <entry key="app/src/main/res/font/fonts.xml" value="0.23489583333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/item_repo.xml" value="0.6126760563380281" />
       </map>
     </option>
   </component>
