@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutParent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="130dp"
     android:layout_margin="@dimen/margin_10"
     android:background="@drawable/rectangle_selector"
     android:padding="@dimen/margin_1">
@@ -12,8 +12,10 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imvAvatar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="4,1"
         android:src="@drawable/ic_launcher_foreground"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
