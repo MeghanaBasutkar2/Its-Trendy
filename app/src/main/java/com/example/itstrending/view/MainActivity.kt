@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var mainAdapter: TrendingReposAdapter
     private lateinit var progress: ProgressBar
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    var isSwiped = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +32,11 @@ class MainActivity : AppCompatActivity() {
         swipeRefreshLayout.setOnRefreshListener {
             onSwipeToRefresh()
         }
-        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this,R.color.blue))
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.blue))
         setUpRecycler()
     }
 
     private fun onSwipeToRefresh() {
-        isSwiped = true
         observeChangesInList()
     }
 
@@ -60,8 +58,8 @@ class MainActivity : AppCompatActivity() {
             mainAdapter.setList(it)
             progress.visibility = View.GONE
             //stop refreshing once user swipes & data is fetched from API call
-            if (isSwiped) {
-                swipeRefreshLayout.isRefreshing = false
+            swipeRefreshLayout.apply {
+                if (isRefreshing) isRefreshing = false
             }
         }
         )
