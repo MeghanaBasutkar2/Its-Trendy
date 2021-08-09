@@ -61,7 +61,7 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context
 
         fun bind(item: TrendingResponse.ItemsObj, selected: Boolean) {
             itemView.apply {
-                //using data binding to refer xml views directly except for layout
+                //using data binding to refer xml views directly
                 txvTitle.text = item.name
                 txvForks.text = itemView.resources.getString(
                     R.string.forks,
