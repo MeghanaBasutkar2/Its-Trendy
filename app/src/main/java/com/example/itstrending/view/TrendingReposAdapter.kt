@@ -31,7 +31,7 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, var list: ArrayList
      * fun keeps track of the currently selected position
      */
     private var selectedPosition by Delegates.observable(-1) { _, oldPos, newPos ->
-        if (oldPos >= 0 && newPos in list.indices) {
+        if (oldPos != -1 && newPos in list.indices) {
             notifyItemChanged(oldPos)
             notifyItemChanged(newPos)
         }
