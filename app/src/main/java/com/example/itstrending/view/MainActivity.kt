@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onSwipeToRefresh() {
-        observeChangesInList()
+        observeList()
     }
 
     private fun setUpRecycler() {
@@ -62,10 +62,10 @@ class MainActivity : AppCompatActivity() {
             addItemDecoration(DividerItemDecoration(context, layoutManager.orientation))
         }
         progress.visibility = View.VISIBLE
-        observeChangesInList()
+        observeList()
     }
 
-    private fun observeChangesInList() {
+    private fun observeList() {
         viewModel.fetchTrendingReposResponse().observe(this, {
             mainAdapter.setList(it)
             progress.visibility = View.GONE
