@@ -1,6 +1,7 @@
 package com.example.itstrending.view
 
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.view.WindowManager
 import android.widget.ProgressBar
@@ -13,18 +14,22 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.example.itstrending.R
 import com.example.itstrending.viewmodel.TrendingViewModel
+import androidx.recyclerview.widget.DividerItemDecoration
+
+
+
 
 class MainActivity : AppCompatActivity() {
-    lateinit var viewModel: TrendingViewModel
-    lateinit var recyclerview: RecyclerView
-    lateinit var mainAdapter: TrendingReposAdapter
+    private lateinit var viewModel: TrendingViewModel
+    private lateinit var recyclerview: RecyclerView
+    private lateinit var mainAdapter: TrendingReposAdapter
     private lateinit var progress: ProgressBar
-    lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        supportActionBar?.hide() //hides toolbar
+        supportActionBar?.setDisplayShowTitleEnabled(false)
         recyclerview = findViewById(R.id.recyclerView)
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         progress = findViewById(R.id.progressBar)
@@ -36,6 +41,11 @@ class MainActivity : AppCompatActivity() {
         setUpRecycler()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_menu, menu)
+        return true
+    }
+
     private fun onSwipeToRefresh() {
         observeChangesInList()
     }
@@ -45,9 +55,11 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         mainAdapter = TrendingReposAdapter(viewModel, this)
+
         recyclerview.apply {
             this.layoutManager = layoutManager
             this.adapter = mainAdapter
+            addItemDecoration(DividerItemDecoration(context, layoutManager.orientation))
         }
         progress.visibility = View.VISIBLE
         observeChangesInList()

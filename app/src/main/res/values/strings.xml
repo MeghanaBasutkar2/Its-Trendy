@@ -2,4 +2,5 @@
     <string name="app_name">ItsTrending</string>
     <string name="msg_empty_string">No Trending Repos found!!</string>
     <string name="forks">%s forks</string>
+    <string name="txt_search">Search repo..</string>
 </resources>

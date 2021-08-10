@@ -5,10 +5,12 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.16822916666666668" />
         <entry key="app/src/main/res/drawable/ic_fork.xml" value="0.23072916666666668" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.26710929519918286" />
         <entry key="app/src/main/res/drawable/rectangle.xml" value="0.23072916666666668" />
         <entry key="app/src/main/res/font/fonts.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25938281901584653" />
         <entry key="app/src/main/res/layout/item_repo.xml" value="0.6126760563380281" />
+        <entry key="app/src/main/res/menu/search_menu.xml" value="0.2520833333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.19895833333333332" />
         <entry key="app/src/main/res/xml/styles.xml" value="0.19635416666666666" />
       </map>
