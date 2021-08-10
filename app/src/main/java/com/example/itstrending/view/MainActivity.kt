@@ -8,6 +8,7 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         recyclerview.apply {
             this.layoutManager = layoutManager
             this.adapter = mainAdapter
+            itemAnimator = DefaultItemAnimator()
             addItemDecoration(DividerItemDecoration(context, layoutManager.orientation))
         }
         progress.visibility = View.VISIBLE
