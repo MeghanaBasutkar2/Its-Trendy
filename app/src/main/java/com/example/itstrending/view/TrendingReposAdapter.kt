@@ -13,10 +13,10 @@ import com.example.itstrending.viewmodel.TrendingViewModel
 import kotlinx.android.synthetic.main.item_repo.view.*
 import kotlin.properties.Delegates
 
-class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context: Context) :
+class TrendingReposAdapter(var viewModel: TrendingViewModel, var list: ArrayList<TrendingResponse.ItemsObj>,
+                           private val context: Context) :
     RecyclerView.Adapter<TrendingReposAdapter.ReposViewHolder>() {
     var isListSet: Boolean = false
-    var list: ArrayList<TrendingResponse.ItemsObj> = ArrayList()
 
     /**
      * inflates the itemview
@@ -25,15 +25,6 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, private val context
         return ReposViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_repo, parent, false)
         )
-    }
-
-    /**
-     * sets recycler list
-     * */
-    fun setList(it: TrendingResponse?) {
-        isListSet = true
-        this.list = it?.items!!
-        notifyDataSetChanged()
     }
 
     /**

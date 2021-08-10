@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: TrendingViewModel
     private lateinit var recyclerview: RecyclerView
-    private lateinit var mainAdapter: TrendingReposAdapter
     private lateinit var progress: ProgressBar
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
@@ -53,11 +52,9 @@ class MainActivity : AppCompatActivity() {
         //defining layout manager
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        mainAdapter = TrendingReposAdapter(viewModel, this)
 
         recyclerview.apply {
             this.layoutManager = layoutManager
-            this.adapter = mainAdapter
             itemAnimator = DefaultItemAnimator()
             addItemDecoration(DividerItemDecoration(context, layoutManager.orientation))
         }
@@ -67,7 +64,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeList() {
         viewModel.fetchTrendingReposResponse().observe(this, {
-            mainAdapter.setList(it)
+            if(it!=null)
+            recyclerview.adapter = TrendingReposAdapter(viewModel, it.items, this)
             progress.visibility = View.GONE
             //stop refreshing once user swipes & data is fetched from API call
             swipeRefreshLayout.apply {
