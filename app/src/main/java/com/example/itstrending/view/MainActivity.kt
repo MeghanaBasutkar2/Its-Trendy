@@ -3,7 +3,6 @@ package com.example.itstrending.view
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.view.WindowManager
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.example.itstrending.R
 import com.example.itstrending.viewmodel.TrendingViewModel
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -73,9 +71,7 @@ class MainActivity : AppCompatActivity() {
             progress.visibility = View.GONE
             //stop refreshing once user swipes & data is fetched from API call
             swipeRefreshLayout.apply {
-                if (isRefreshing) isRefreshing = false
-            }
-        }
-        )
+                if (isRefreshing) isRefreshing = false }
+        })
     }
 }
