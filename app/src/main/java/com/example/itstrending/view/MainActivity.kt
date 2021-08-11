@@ -51,29 +51,22 @@ class MainActivity : AppCompatActivity() {
             queryHint = resources.getString(R.string.txt_search)
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
         }
-        setupSearchQuery(searchView)
-        return true
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
 
-    }
-
-    private fun setupSearchQuery(searchView: SearchView) {
-        val queryChangedListener: SearchView.OnQueryTextListener =
-            object : SearchView.OnQueryTextListener {
-                override fun onQueryTextChange(entry: String): Boolean {
-                    listRepos.filter {
-                        it.name?.contains(entry)!! || it.description.contains(entry)
-                        return true
-                    }
-                    return true
+                if (listRepos.size >0) {
+                    var listUpdated = listRepos.filter{(it.description!=null &&
+                            it.description?.contains(query, true)) ||
+                            (it.name!=null && it.name!!.contains(query, true))}
+                    (recyclerview.adapter as TrendingReposAdapter).updateList(listUpdated)
                 }
-
-                override fun onQueryTextSubmit(p0: String): Boolean {
-                    Toast.makeText(applicationContext, "search :$p0", Toast.LENGTH_LONG)
-                        .show()
-                    return false
-                }
+                return true
             }
-        searchView.setOnQueryTextListener(queryChangedListener)
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
+        return true
     }
 
     private fun onSwipeToRefresh() {

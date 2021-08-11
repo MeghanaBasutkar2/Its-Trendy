@@ -3,10 +3,9 @@ package com.example.itstrending.network
 import com.example.itstrending.data.TrendingResponse
 import retrofit2.Call
 
-class TrendingReposApiClient(baseUrl: String) :
-    BaseHttpClient<TrendingApiService>(baseUrl) {
+class TrendingReposApiClient(baseUrl: String) : BaseHttpClient<TrendingApiService>(baseUrl) {
     private var page: Int = 1
-    private var platform: String = "android"
+    private var platform: String = "all"
     private var itemsCount: Int = 20
 
     companion object {
