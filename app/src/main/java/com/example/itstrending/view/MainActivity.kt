@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +17,6 @@ import com.example.itstrending.R
 import com.example.itstrending.viewmodel.TrendingViewModel
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.itstrending.data.TrendingResponse
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: TrendingViewModel
@@ -51,22 +49,39 @@ class MainActivity : AppCompatActivity() {
             queryHint = resources.getString(R.string.txt_search)
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
         }
+        setSearchQuery(searchView)
+        return true
+    }
+
+    override fun onBackPressed() {
+        (recyclerview.adapter as TrendingReposAdapter).updateList(listRepos)
+    }
+
+    /**
+     * adds search text listeners and updates the recycler view with filtered list
+     * */
+    private fun setSearchQuery(searchView: SearchView) {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-
-                if (listRepos.size >0) {
-                    var listUpdated = listRepos.filter{(it.description!=null &&
-                            it.description?.contains(query, true)) ||
-                            (it.name!=null && it.name!!.contains(query, true))}
-                    (recyclerview.adapter as TrendingReposAdapter).updateList(listUpdated)
+                if (listRepos.size > 0) {
+                   updateFilteredList(query)
                 }
                 return true
             }
-            override fun onQueryTextChange(newText: String): Boolean {
-                return false
+            override fun onQueryTextChange(entered: String): Boolean {
+                if(entered.length >=3){ //updates recyclerview after 3 chars are entered by user
+                    updateFilteredList(entered)
+                }
+                return true
+            }
+
+            private fun updateFilteredList(query: String) {
+                val listUpdated = listRepos.filter{(it.description!=null &&
+                        it.description.contains(query, true)) ||
+                        (it.name!=null && it.name!!.contains(query, true))}
+                (recyclerview.adapter as TrendingReposAdapter).updateList(listUpdated)
             }
         })
-        return true
     }
 
     private fun onSwipeToRefresh() {
