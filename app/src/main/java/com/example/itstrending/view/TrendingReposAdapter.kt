@@ -16,7 +16,6 @@ import kotlin.properties.Delegates
 class TrendingReposAdapter(var viewModel: TrendingViewModel, var list: ArrayList<TrendingResponse.ItemsObj>,
                            private val context: Context) :
     RecyclerView.Adapter<TrendingReposAdapter.ReposViewHolder>() {
-    var isListSet: Boolean = false
 
     /**
      * inflates the itemview
@@ -43,6 +42,8 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, var list: ArrayList
 
     inner class ReposViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
+            setSelectionPrev()
+
             itemView.layoutParent.setOnClickListener {
                 selectedPosition = adapterPosition
                 notifyItemChanged(adapterPosition)
@@ -69,7 +70,6 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, var list: ArrayList
                     imvAvatar, radius)
                 layoutParent.isSelected = selected
             }
-            setSelectionPrev()
         }
     }
 
@@ -83,7 +83,7 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, var list: ArrayList
     }
 
     override fun getItemCount(): Int {
-        if (list.size < 1 && isListSet) {
+        if (list.size < 1) {
             Toast.makeText(
                 context, context.resources.getString(R.string.msg_empty_string),
                 Toast.LENGTH_LONG
