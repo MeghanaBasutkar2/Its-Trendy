@@ -4,17 +4,19 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itstrending.R
 import com.example.itstrending.Utils.NumberFormatter
+import com.example.itstrending.Utils.ViewUtils
 import com.example.itstrending.data.TrendingResponse
 import com.example.itstrending.viewmodel.TrendingViewModel
 import kotlinx.android.synthetic.main.item_repo.view.*
 import kotlin.properties.Delegates
 
-class TrendingReposAdapter(var viewModel: TrendingViewModel, var list: ArrayList<TrendingResponse.ItemsObj>,
-                           private val context: Context) :
+class TrendingReposAdapter(
+    var viewModel: TrendingViewModel, var list: ArrayList<TrendingResponse.ItemsObj>,
+    private val context: Context
+) :
     RecyclerView.Adapter<TrendingReposAdapter.ReposViewHolder>() {
 
     /**
@@ -65,9 +67,11 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, var list: ArrayList
                     item.forksCount > 0 -> imvFork.visibility = View.VISIBLE
                 }
 
-                val radius = 8
-                ImageUtils.loadImage(context, item.owner.avatar, R.drawable.ic_launcher_foreground,
-                    imvAvatar, radius)
+                val radius = 10
+                ImageUtils.loadImage(
+                    context, item.owner.avatar, R.drawable.ic_launcher_foreground,
+                    imvAvatar, radius
+                )
                 layoutParent.isSelected = selected
             }
         }
@@ -84,10 +88,10 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, var list: ArrayList
 
     override fun getItemCount(): Int {
         if (list.size < 1) {
-            Toast.makeText(
-                context, context.resources.getString(R.string.msg_empty_string),
-                Toast.LENGTH_LONG
-            ).show()
+            ViewUtils.showToast(
+                context,
+                context.resources.getString(R.string.msg_empty_string)
+            )
         }
         return list.size
     }
@@ -95,7 +99,7 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, var list: ArrayList
     /**
      * filtered list on user search
      * */
-    public fun updateList(repos: List<TrendingResponse.ItemsObj>) {
+    fun updateList(repos: List<TrendingResponse.ItemsObj>) {
         list = repos as ArrayList
         notifyDataSetChanged()
     }
