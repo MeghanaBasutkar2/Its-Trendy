@@ -91,4 +91,12 @@ class TrendingReposAdapter(var viewModel: TrendingViewModel, var list: ArrayList
         }
         return list.size
     }
+
+    /**
+     * filtered list on user search
+     * */
+    public fun updateList(repos: List<TrendingResponse.ItemsObj>) {
+        list = repos as ArrayList
+        notifyDataSetChanged()
+    }
 }
