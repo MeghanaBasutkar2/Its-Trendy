@@ -42,19 +42,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_menu, menu)
-        var searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
-        var menuItem = menu?.findItem(R.id.search)
+        val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager
+        val menuItem = menu?.findItem(R.id.search)
         val searchView = menuItem?.actionView as SearchView
         searchView.apply {
             queryHint = resources.getString(R.string.txt_search)
             setSearchableInfo(searchManager.getSearchableInfo(componentName))
         }
         setSearchQuery(searchView)
+        searchView.setOnCloseListener {
+            if (listRepos.size >= 0)
+                updateList(listRepos)
+            true
+        }
         return true
     }
 
+    fun updateList(list: List<TrendingResponse.ItemsObj>) {
+        (recyclerview.adapter as TrendingReposAdapter).updateList(list)
+    }
+
     override fun onBackPressed() {
-        (recyclerview.adapter as TrendingReposAdapter).updateList(listRepos)
+        updateList(listRepos)
     }
 
     /**
@@ -64,22 +73,25 @@ class MainActivity : AppCompatActivity() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 if (listRepos.size > 0) {
-                   updateFilteredList(query)
+                    updateFilteredList(query)
                 }
                 return true
             }
+
             override fun onQueryTextChange(entered: String): Boolean {
-                if(entered.length >=3){ //updates recyclerview after 3 chars are entered by user
+                if (entered.length >= 3) { //updates recyclerview after 3 chars are entered by user
                     updateFilteredList(entered)
                 }
                 return true
             }
 
             private fun updateFilteredList(query: String) {
-                val listUpdated = listRepos.filter{(it.description!=null &&
-                        it.description.contains(query, true)) ||
-                        (it.name!=null && it.name!!.contains(query, true))}
-                (recyclerview.adapter as TrendingReposAdapter).updateList(listUpdated)
+                val listUpdated = listRepos.filter {
+                    (it.description != null &&
+                            it.description.contains(query, true)) ||
+                            (it.name != null && it.name!!.contains(query, true))
+                }
+                updateList(listUpdated)
             }
         })
     }
