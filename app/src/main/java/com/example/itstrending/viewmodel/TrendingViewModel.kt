@@ -4,12 +4,12 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.itstrending.data.TrendingResponse
 import com.example.itstrending.repository.NetworkRepository
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class TrendingViewModel(var stateHandle: SavedStateHandle) : ViewModel() {
-    var reposList: MutableLiveData<TrendingResponse> = MutableLiveData<TrendingResponse>()
     private var identifier: String = "SAVED_POS"
 
     fun getSelectedIndex(): LiveData<Int> {
@@ -20,14 +20,21 @@ class TrendingViewModel(var stateHandle: SavedStateHandle) : ViewModel() {
         stateHandle.set(identifier, position)
     }
 
+    var reposList = MutableLiveData<TrendingResponse>().apply {
+        viewModelScope.launch { fetchRepos() }
+    }
+
     /**
      * fun executes the fetch API call
      * */
-    fun fetchTrendingReposResponse(): LiveData<TrendingResponse> {
-        val response = NetworkRepository.getTrendingRepos()
+    private fun fetchRepos() {
+        val response =
+            NetworkRepository.getTrendingRepos()
         response?.enqueue(object : Callback<TrendingResponse> {
-            override fun onResponse(call: Call<TrendingResponse>,
-                response: Response<TrendingResponse>) {
+            override fun onResponse(
+                call: Call<TrendingResponse>,
+                response: Response<TrendingResponse>
+            ) {
                 reposList.postValue(response.body()) //updates the live data obj asynchronously
             }
 
@@ -35,6 +42,5 @@ class TrendingViewModel(var stateHandle: SavedStateHandle) : ViewModel() {
                 t.message?.let { Log.e("error-----------> ", it) }
             }
         })
-        return reposList
     }
 }
