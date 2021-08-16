@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeList() {
-        viewModel.fetchTrendingReposResponse().observe(this, {
+        viewModel.reposList.observe(this, {
             if (it != null) {
                 recyclerview.adapter = TrendingReposAdapter(viewModel, it.items, this)
                 listRepos = it.items
